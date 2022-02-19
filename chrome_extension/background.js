@@ -1,4 +1,6 @@
 
+var UpdateURL = "http://localhost:8099/chupdate?key="
+
 function handleTabUpdated(tabId, changeInfo, tab) {
     meetActive = false
     if (changeInfo.status == 'complete') {
@@ -13,12 +15,12 @@ function doQuery() {
             let url = t[i].url
             if (url.includes("meet.google.com")) {
                 meetActive = true
-                // fetch("https://google.com/echo")
-                //     .then(response => response.text())
-                //     .then(data => console.log(data))
             };
         }
-        console.log("meetActive: ", meetActive)
+        fetch(UpdateURL + meetActive, {
+            cache: 'no-cache',
+        })
+        // console.log("meetActive: ", meetActive)
     })
 
 }
