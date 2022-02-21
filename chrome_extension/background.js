@@ -1,26 +1,35 @@
+var UpdateURL = "http://localhost:8099/chupdate"
+var UpdateSuffix = "?key="
+var MatchURL = "meet.google.com"
 
-var UpdateURL = "http://localhost:8099/chupdate?key="
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.type === "UpdateCfg") {
+        UpdateURL = request.URL
+        MatchURL = request.Match
+    }
+})
 
 function handleTabUpdated(tabId, changeInfo, tab) {
     meetActive = false
     if (changeInfo.status == 'complete') {
         doQuery()
     }
+    return
 };
 
 function doQuery() {
+
     meetActive = false
     chrome.tabs.query({}).then((t) => {
         for (i = 0; i < t.length; i++) {
             let url = t[i].url
-            if (url.includes("meet.google.com")) {
+            if (url.includes(MatchURL)) {
                 meetActive = true
             };
         }
-        fetch(UpdateURL + meetActive, {
+        fetch(UpdateURL + UpdateSuffix + meetActive, {
             cache: 'no-cache',
         })
-        // console.log("meetActive: ", meetActive)
     })
 
 }

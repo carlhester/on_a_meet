@@ -6,5 +6,9 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["tabs", "http://localhost:8099/*"]
+  "host_permissions": ["http://localhost:8099/*", "http://192.168.1.53:8099/*"],
+  "permissions": ["tabs"],
+  "action": {
+    "default_popup": "popup.html"
+  }
 }
